@@ -14,6 +14,11 @@ fun fail(msg: String) {
     exitProcess(1)
 }
 
+fun <T> fail(msg: String): T {
+    fail(msg)
+    throw IllegalStateException(msg)
+}
+
 fun info(msg: String) = log.info(msg)
 
 fun encodePath(input: String): String {
