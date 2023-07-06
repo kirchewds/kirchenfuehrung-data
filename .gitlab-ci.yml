@@ -1,0 +1,13 @@
+image: archlinux:latest
+
+pages:
+  stage: deploy
+  script:
+    - pacman -S --noconfirm kotlin
+    - ./scripts/ci.main.kts --highlight "Highlights - Demo" --targetDir "pages" --targetUrl "http://127.0.0.1:8000/"
+  artifacts:
+    paths:
+      - public
+    expire_in: 2 days
+  only:
+    - master
