@@ -10,22 +10,26 @@ import kotlin.io.path.*
 info("Parsing arguments")
 
 var highlight: String? = null
+var targetUrl: String? = null
 
 if (args.size % 2 != 0) fail("Argument lacks value")
 var i = 0
 while (i < args.size) when (args[i++]) {
     "--highlight" -> highlight = args[i++]
+    "--targetUrl" -> targetUrl = args[i++]
     else -> fail("Unrecognized argument: ${args[i - 1]}")
 }
 
 if (highlight == null) fail("Highlight is not set")
+if (targetUrl == null) fail("Highlight is not set")
+if (!targetUrl!!.endsWith("/")) targetUrl += "/"
 
 val dir = createTempDirectory()
-generate(Path("."), highlight!!, dir, "http://127.0.0.1:8080/")
+generate(Path("."), highlight!!, dir, targetUrl!!)
 Runtime.getRuntime().addShutdownHook(Thread {
     dir.deleteRecursively()
 })
 
-info("Launching server")
+info("Launching server at http://127.0.0.1:8080")
 
 SimpleFileServer.createFileServer(InetSocketAddress(8080), dir, SimpleFileServer.OutputLevel.INFO).start()
