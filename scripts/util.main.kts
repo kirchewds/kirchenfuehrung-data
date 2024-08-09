@@ -31,24 +31,12 @@ fun <T> fail(msg: String): T {
 
 fun info(msg: String) = log.info(msg)
 
-fun encodePath(input: String): String {
-    fun isUnsafe(ch: Char): Boolean {
-        return if (ch.code > 128 || ch.code < 0) true else " %$&+,/:;=?@<>#%".indexOf(ch) >= 0
+private val Int.hexChar get() = (if (this < 10) '0'.code + this else 'A'.code + this - 10).toChar()
+private val Char.hex get() = (code / 16).hexChar.toString() + (code % 16).hexChar
+private val Char.isAlphaNumeric get() = code in 'a'.code..'z'.code || code in 'A'.code..'Z'.code || code in '0'.code..'9'.code
+val String.pathEscaped get() = let { str -> buildString {
+    for (ch in str) {
+        if (ch.isAlphaNumeric) append(ch)
+        else append(ch.hex)
     }
-
-    fun toHex(ch: Int): Char {
-        return (if (ch < 10) '0'.code + ch else 'A'.code + ch - 10).toChar()
-    }
-
-    val resultStr = StringBuilder()
-    for (ch in input.toCharArray()) {
-        if (isUnsafe(ch)) {
-            resultStr.append('%')
-            resultStr.append(toHex(ch.code / 16))
-            resultStr.append(toHex(ch.code % 16))
-        } else {
-            resultStr.append(ch)
-        }
-    }
-    return resultStr.toString()
-}
+} }

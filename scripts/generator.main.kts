@@ -33,11 +33,11 @@ fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: Str
         "highlight"(highlight)
         jArray("tours") { tourDirs.forEach { tourDir ->
             info("Processing tour: $tourDir")
-            val targetTourDir = targetDir.resolve(tourDir.name).createDirectory()
+            val targetTourDir = targetDir.resolve(tourDir.name.pathEscaped).createDirectory()
             jObject {
                 "name"(tourDir.name)
                 if (tourDir.resolve(coverName).exists()) {
-                    "cover"("$targetUrl${encodePath(tourDir.name)}/$coverName")
+                    "cover"("$targetUrl${tourDir.name.pathEscaped}/$coverName")
                     tourDir.resolve(coverName).copyTo(targetTourDir.resolve(coverName))
                 } else jNull("cover")
                 jArray("tracks") {
@@ -53,9 +53,9 @@ fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: Str
                         .forEach {
                             info("Processing track: ${it.first}")
                             if (it.second.size != 2) fail("Unexpected number of components in pair: ${it.second.size} for ${it.first}")
-                            it.second.forEach { it.copyTo(targetTourDir.resolve(it.fileName)) }
+                            it.second.forEach { it.copyTo(targetTourDir.resolve(it.name.pathEscaped)) }
                             fun byExtension(ext: String) =
-                                "$targetUrl${encodePath(tourDir.name)}/${encodePath(it.second.first { it.extension == ext }.name)}"
+                                "$targetUrl${tourDir.name.pathEscaped}/${it.second.first { it.extension == ext }.name.pathEscaped}"
                             jObject {
                                 "name"(it.first)
                                 "image"(byExtension("jpg"))
