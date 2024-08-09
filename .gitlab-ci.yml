@@ -4,7 +4,7 @@ pages:
   stage: deploy
   script:
     - pacman -Syu --noconfirm kotlin
-    - ./scripts/ci.main.kts --highlight "Highlights - Demo" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
+    - ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
   artifacts:
     paths:
       - public

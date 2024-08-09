@@ -9,7 +9,7 @@ import kotlin.io.path.*
 fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: String) {
     info("Reading tours dir")
 
-    val ignored = arrayOf("scripts", ".idea", ".git", ".gitignore", ".gitlab-ci.yml", "pages")
+    val ignored = arrayOf("scripts", ".idea", ".git", ".gitignore", ".gitlab-ci.yml", "public")
 
     val tourDirs = sourceDir.absolute()
         .listDirectoryEntries()
@@ -26,6 +26,8 @@ fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: Str
 
     val trackPattern = Regex("([0-9]+) .+\\.(?:mp3|jpg)", RegexOption.DOT_MATCHES_ALL)
 
+    val coverName = "cover.jpg"
+
     jsonPath.jObject(JTransport) {
         "version"(1)
         "highlight"(highlight)
@@ -34,9 +36,13 @@ fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: Str
             val targetTourDir = targetDir.resolve(tourDir.name).createDirectory()
             jObject {
                 "name"(tourDir.name)
-                jNull("cover")
+                if (tourDir.resolve(coverName).exists()) {
+                    "cover"("$targetUrl${encodePath(tourDir.name)}/$coverName")
+                    tourDir.resolve(coverName).copyTo(targetTourDir.resolve(coverName))
+                } else jNull("cover")
                 jArray("tracks") {
                     tourDir.listDirectoryEntries()
+                        .filter { it.name != coverName }
                         .groupBy { it.nameWithoutExtension }
                         .toList()
                         .sortedBy {
