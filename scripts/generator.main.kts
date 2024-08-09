@@ -1,7 +1,7 @@
 @file:Import("util.main.kts")
 @file:OptIn(kotlin.io.path.ExperimentalPathApi::class)
 
-import io.gitlab.jfronny.commons.serialize.gson.dsl.*
+import io.gitlab.jfronny.commons.serialize.dsl.*
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 import kotlin.io.path.*
@@ -26,7 +26,7 @@ fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: Str
 
     val trackPattern = Regex("([0-9]+) .+\\.(?:mp3|jpg)", RegexOption.DOT_MATCHES_ALL)
 
-    jsonPath.jObject(gson) {
+    jsonPath.jObject(JTransport) {
         "version"(1)
         "highlight"(highlight)
         jArray("tours") { tourDirs.forEach { tourDir ->
