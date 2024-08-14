@@ -33,10 +33,10 @@ fun info(msg: String) = log.info(msg)
 
 private val Int.hexChar get() = (if (this < 10) '0'.code + this else 'A'.code + this - 10).toChar()
 private val Char.hex get() = (code / 16).hexChar.toString() + (code % 16).hexChar
-private val Char.isAlphaNumeric get() = code in 'a'.code..'z'.code || code in 'A'.code..'Z'.code || code in '0'.code..'9'.code
+private val legalChars = listOf('a'..'z', 'A'..'Z', '0'..'9', setOf('.')).flatten()
 val String.pathEscaped get() = let { str -> buildString {
     for (ch in str) {
-        if (ch.isAlphaNumeric) append(ch)
+        if (ch in legalChars) append(ch)
         else append(ch.hex)
     }
 } }
