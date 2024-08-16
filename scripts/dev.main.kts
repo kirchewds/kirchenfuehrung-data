@@ -12,7 +12,6 @@ info("Parsing arguments")
 var highlight: String? = null
 var targetUrl: String? = null
 
-if (args.size % 2 != 0) fail("Argument lacks value")
 var i = 0
 while (i < args.size) when (args[i++]) {
     "--highlight" -> highlight = args[i++]
@@ -25,6 +24,7 @@ if (targetUrl == null) fail("Highlight is not set")
 if (!targetUrl!!.endsWith("/")) targetUrl += "/"
 
 val dir = createTempDirectory()
+JTransport.pretty()
 generate(Path("."), highlight!!, dir, targetUrl!!)
 Runtime.getRuntime().addShutdownHook(Thread {
     dir.deleteRecursively()

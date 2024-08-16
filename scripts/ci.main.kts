@@ -11,12 +11,12 @@ var highlight: String? = null
 var targetDir: Path? = null
 var targetUrl: String? = null
 
-if (args.size % 2 != 0) fail("Argument lacks value")
 var i = 0
 while (i < args.size) when (args[i++]) {
     "--highlight" -> highlight = args[i++]
     "--targetDir" -> targetDir = Path(args[i++]).absolute()
     "--targetUrl" -> targetUrl = args[i++]
+    "--pretty" -> JTransport.pretty()
     else -> fail("Unrecognized argument: ${args[i - 1]}")
 }
 

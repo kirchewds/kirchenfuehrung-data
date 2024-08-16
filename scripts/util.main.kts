@@ -13,9 +13,14 @@ import java.io.Writer
 import kotlin.system.exitProcess
 
 object JTransport: Transport<IOException, JsonReader, JsonWriter> {
+    private var indent: String? = null
     override fun createReader(p0: Reader): JsonReader = JsonReader(p0).setLenient(true)
-    override fun createWriter(p0: Writer): JsonWriter = JsonWriter(p0).setSerializeNulls(true)
+    override fun createWriter(p0: Writer): JsonWriter = JsonWriter(p0).setSerializeNulls(true).setIndent(indent)
     override fun getFormatMime(): String = "application/json"
+
+    fun pretty() {
+        indent = "  "
+    }
 }
 val log: SystemLoggerPlus = SystemLoggerPlus.forName("Kirchenführer/Data")
 
