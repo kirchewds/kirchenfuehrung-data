@@ -43,7 +43,7 @@ fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: Str
                 } else jNull("cover")
                 if (tourDir.resolve(descriptionName).exists()) {
                     "description"(tourDir.resolve(descriptionName).readText(StandardCharsets.UTF_8))
-                } else "description"("A tour of ${tourDir.name}")
+                } else "description"("No description available")
                 jArray("tracks") {
                     tourDir.listDirectoryEntries()
                         .filter { it.name != coverName && it.name != descriptionName }
