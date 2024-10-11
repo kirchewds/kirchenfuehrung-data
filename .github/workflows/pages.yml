@@ -39,8 +39,7 @@ jobs:
         with:
           candidate: kotlin
       - name: Generate Artifact
-        run: |
-          ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
+        run: kotlinc -script ./scripts/ci.main.kts -- --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
