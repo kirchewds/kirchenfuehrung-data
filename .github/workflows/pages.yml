@@ -36,7 +36,7 @@ jobs:
       - name: Generate Artifact
         run: |
           sudo apt-get install -y kotlin
-          ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
+          kotlinc -script ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
