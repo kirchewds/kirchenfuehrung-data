@@ -28,13 +28,17 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Generate Artifact
-        run: ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.github.io/kirchenfuehrung-data/"
+        run: |
+          pacman -Syu --noconfirm kotlin
+          ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.github.io/kirchenfuehrung-data/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
