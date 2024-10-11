@@ -38,6 +38,7 @@ jobs:
         id: sdkman
         with:
           candidate: kotlin
+          version: 2.0.20
       - name: Generate Artifact
         run: kotlinc -script ./scripts/ci.main.kts -- --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
       - name: Upload artifact
