@@ -33,10 +33,14 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Pages
         uses: actions/configure-pages@v5
+      - name: Install Kotlin
+        uses: sdkman/sdkman-action@main
+        id: sdkman
+        with:
+          candidate: kotlin
       - name: Generate Artifact
         run: |
-          sudo apt-get install -y kotlin
-          kotlinc -script ./scripts/ci.main.kts -- --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
+          ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
