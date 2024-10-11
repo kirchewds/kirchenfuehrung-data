@@ -35,13 +35,11 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Install Java
         uses: sdkman/sdkman-action@main
-        id: sdkman
         with:
           candidate: java
           version: 21.0.4-tem
       - name: Install Kotlin
         uses: sdkman/sdkman-action@main
-        id: sdkman
         with:
           candidate: kotlin
           version: 2.0.20
