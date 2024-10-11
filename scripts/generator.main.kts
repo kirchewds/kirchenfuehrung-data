@@ -9,7 +9,7 @@ import kotlin.io.path.*
 fun generate(sourceDir: Path, highlight: String, targetDir: Path, targetUrl: String) {
     info("Reading tours dir")
 
-    val ignored = arrayOf("scripts", ".idea", ".git", ".gitignore", ".gitattributes", ".gitlab-ci.yml", "public")
+    val ignored = arrayOf("scripts", ".idea", ".git", ".gitignore", ".gitattributes", ".gitlab-ci.yml", ".github", "public")
 
     val tourDirs = sourceDir.absolute()
         .listDirectoryEntries()

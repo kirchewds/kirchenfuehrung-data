@@ -34,7 +34,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Generate Artifact
-        run: ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.gitlab.io/kirchenfuehrung-data/"
+        run: ./scripts/ci.main.kts --highlight "Kirchenführung" --targetDir "public" --targetUrl "https://kirchewds.github.io/kirchenfuehrung-data/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
